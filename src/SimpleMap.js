@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
+import MyGreatPlace from './MyGreatPlace';
 
 const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
@@ -36,6 +37,7 @@ export default class SimpleMap extends Component {
           lng={30.337844}
           text={'Kreyser Avrora'}
         />
+        <MyGreatPlace lat={59.955413} lng={30.337844} text={'A'} /* Kreyser Avrora */ />
       </GoogleMapReact>
     );
   }
