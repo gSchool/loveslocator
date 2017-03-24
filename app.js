@@ -12,6 +12,10 @@ var locations = require('./routes/locations');
 var app = express();
 
 // view engine setup
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
+app.use('/', express.static(__dirname + '/node_modules/requirejs/'));
+app.use('/', express.static(__dirname + '/node_modules/text/'));
+app.use('/', express.static(__dirname + '/node_modules/vue/dist/'));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 

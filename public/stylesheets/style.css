@@ -6,3 +6,10 @@ body {
 a {
   color: #00B7FF;
 }
+
+#mapid { height: 180px; }
+
+#map {
+  width: 650px;
+  height: 480px;
+}
