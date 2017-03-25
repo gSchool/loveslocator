@@ -18,7 +18,7 @@ app.get('/key', (req, res) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(process.env.GOOGLE_MAPS_KEY));
   } catch(ex) {
-    console.error('Error getting key ', ex);
+    console.error('Error getting key: ', ex);
   }
 });
 
@@ -31,7 +31,7 @@ app.get('/api/locations', async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(locations));
   } catch(ex) {
-    console.error('Error getting locations ', ex);
+    console.error('Error getting locations: ', ex);
   }
 });
 
@@ -44,7 +44,7 @@ app.get('/api/states', async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(locations));
   } catch(ex) {
-    console.error('Error getting states ', ex);
+    console.error('Error getting states :', ex);
   }
 });
 
@@ -55,18 +55,40 @@ app.get('/api/cities', async (req, res, next) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(locations));
   } catch(ex) {
-    console.error('Error getting cities ', ex);
+    console.error('Error getting cities: ', ex);
   }
 });
 
-app.get('/api/stores/types', async (req, res, next) => {
+app.get('/api/store/types', async (req, res, next) => {
   try {
     const stream = await fetch(`${BASE_URL}/GetStoreTypes`)
     const types = await stream.json();
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(types));
   } catch(ex) {
-    console.error('Error getting location types ', ex);
+    console.error('Error getting location types: ', ex);
+  }
+});
+
+app.get('/api/amenities', async (req, res, next) => {
+  try {
+    const stream = await fetch(`${BASE_URL}/GetAmenities`)
+    const amenities = await stream.json();
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(amenities));
+  } catch(ex) {
+    console.error('Error getting amenities: ', ex);
+  }
+});
+
+app.get('/api/restaurants', async (req, res, next) => {
+  try {
+    const stream = await fetch(`${BASE_URL}/GetRestaurants`)
+    const restaurants = await stream.json();
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(restaurants));
+  } catch(ex) {
+    console.error('Error getting restaurants: ', ex);
   }
 });
 
