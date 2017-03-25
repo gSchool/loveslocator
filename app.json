@@ -1,0 +1,20 @@
+{
+  "name": "loveslocator",
+  "scripts": {
+  },
+  "env": {
+    "GOOGLE_MAPS_KEY": {
+      "required": true
+    }
+  },
+  "formation": {
+  },
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ]
+}
