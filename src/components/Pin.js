@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 //import shouldPureComponentUpdate from 'react-pure-render/function';
 
-export default class MyGreatPlace extends Component {
+export default class Pin extends Component {
     static defaultProps = {};
 
     //shouldComponentUpdate = shouldPureComponentUpdate;

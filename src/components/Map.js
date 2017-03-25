@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import GoogleMapReact from 'google-map-react';
-import MyGreatPlace from './MyGreatPlace';
+import Pin from './Pin';
 
-const AnyReactComponent = ({ text }) => <div>{text}</div>;
-
-export default class SimpleMap extends Component {
+export default class Map extends Component {
   static defaultProps = {
     center: { 
       lat: 39.0000, 
@@ -38,7 +36,7 @@ export default class SimpleMap extends Component {
     return this.state.locations === undefined
       ? null
       : this.state.locations.Points.map((location, i) => {
-        return (<MyGreatPlace key={i} lat={location.Latitude} lng={location.Longitude} text={location.Name} />);
+        return (<Pin key={i} lat={location.Latitude} lng={location.Longitude} text={location.Name} />);
       });
   }
 
@@ -49,11 +47,6 @@ export default class SimpleMap extends Component {
         defaultCenter={this.props.center}
         defaultZoom={this.props.zoom}
       >
-        <AnyReactComponent
-          lat={59.955413}
-          lng={30.337844}
-          text={'Kreyser Avrora'}
-        />
         {this.locations}
       </GoogleMapReact>
     );
