@@ -5,3 +5,9 @@ npm-debug.log
 
 # react
 build/
+
+# IDEA
+*.ipr
+*.iml
+*.iws
+.idea/
