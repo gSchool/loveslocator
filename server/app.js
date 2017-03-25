@@ -4,6 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const fetch = require('node-fetch');
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -13,11 +14,13 @@ app.use(morgan(':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:htt
 // Serve static assets
 app.use(express.static(path.resolve(__dirname, '..', 'build')));
 
+app.use(bodyParser.json());
+
 app.get('/key', (req, res) => {
   try {
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(process.env.GOOGLE_MAPS_KEY));
-  } catch(ex) {
+  } catch (ex) {
     console.error('Error getting key: ', ex);
   }
 });
@@ -30,7 +33,7 @@ app.get('/api/locations', async (req, res, next) => {
     const locations = await stream.json();
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(locations));
-  } catch(ex) {
+  } catch (ex) {
     console.error('Error getting locations: ', ex);
   }
 });
@@ -43,7 +46,7 @@ app.get('/api/states', async (req, res, next) => {
     const locations = await stream.json();
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(locations));
-  } catch(ex) {
+  } catch (ex) {
     console.error('Error getting states :', ex);
   }
 });
@@ -54,7 +57,7 @@ app.get('/api/cities', async (req, res, next) => {
     const locations = await stream.json();
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(locations));
-  } catch(ex) {
+  } catch (ex) {
     console.error('Error getting cities: ', ex);
   }
 });
@@ -65,7 +68,7 @@ app.get('/api/store/types', async (req, res, next) => {
     const types = await stream.json();
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(types));
-  } catch(ex) {
+  } catch (ex) {
     console.error('Error getting location types: ', ex);
   }
 });
@@ -76,7 +79,7 @@ app.get('/api/amenities', async (req, res, next) => {
     const amenities = await stream.json();
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(amenities));
-  } catch(ex) {
+  } catch (ex) {
     console.error('Error getting amenities: ', ex);
   }
 });
@@ -87,8 +90,43 @@ app.get('/api/restaurants', async (req, res, next) => {
     const restaurants = await stream.json();
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(restaurants));
-  } catch(ex) {
+  } catch (ex) {
     console.error('Error getting restaurants: ', ex);
+  }
+});
+
+/*
+{
+    "StoreTypes": [
+        "Travel Stop"
+    ],
+    "Amenities": [
+        "Commercial Truck Oil Cha",
+        "ATM"
+    ],
+    "Restaurants": [
+        "Arby's"
+    ],
+    "State": "OK",
+    "City": "Colbert ",
+    "Highway": "Hwy 169"
+}
+*/
+app.post('/api/locations/search', async (req, res, next) => {
+  try {
+    const stream = await fetch(`${BASE_URL}/SearchLocations`, {
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      method: "POST",
+      body: JSON.stringify(req.body)
+    });
+    const locations = await stream.json();
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(locations[0]));
+  } catch (ex) {
+    console.error('Error searching locations: ', ex);
   }
 });
 

@@ -7,6 +7,7 @@ export default class LocationTypeBar extends Component {
         this.state = {
             types: []
         };
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -24,12 +25,26 @@ export default class LocationTypeBar extends Component {
         }
     }
 
+    handleChange(ev) {
+        const locationTypes = Object.assign({}, this.props.locationTypes);
+        locationTypes[ev.target.name] = ev.target.checked;
+        this.props.onChange(locationTypes);
+    }
+
     get typeCodes() {
         return this.state.types && this.state.types.map((type, i) => {
             return (
                 <div key={i}>
-                    <input type="checkbox" id={`s${i}`} class="left" style={{marginRight: '10px'}} />
-                    <label for={`s${i}`}>{type.Name}</label>
+                    <input 
+                        type="checkbox" 
+                        id={`s${i}`} 
+                        name={type.Name}
+                        className="left" 
+                        style={{marginRight: '10px'}} 
+                        defaultChecked={this.props.locationTypes[type.Name]}
+                        onChange={this.handleChange}
+                        />
+                    <label htmlFor={`s${i}`}>{type.Name}</label>
                 </div>
             )
         });

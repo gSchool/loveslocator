@@ -28,8 +28,8 @@ export default class RestaurantsBar extends Component {
         return this.state.restaurants && this.state.restaurants.map((restaurant, i) => {
             return (
                 <div key={i} style={{margin: '10px'}}>
-                    <input type="checkbox" id={`s${i}`} class="left" style={{marginRight: '10px'}} />
-                    <label for={`s${i}`}>{restaurant.Name}</label>
+                    <input type="checkbox" id={`s${i}`} className="left" style={{marginRight: '10px'}} />
+                    <label htmlFor={`s${i}`}>{restaurant.Name}</label>
                 </div>
             )
         });

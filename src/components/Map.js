@@ -14,18 +14,15 @@ export default class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: undefined,
-      locations: undefined
+      key: undefined
     };
   }
 
   async componentDidMount() {
     try {
       const key = await (await fetch('/key')).json();
-      const locations = await (await fetch('/api/locations')).json();
       this.setState(Object.assign({}, this.state, {
         key: key,
-        locations: locations
       }));
     } catch (ex) {
       console.error(ex);
@@ -33,9 +30,9 @@ export default class Map extends Component {
   }
 
   get locations() {
-    return this.state.locations === undefined
+    return this.props.locations === undefined
       ? null
-      : this.state.locations.Points.map((location, i) => {
+      : this.props.locations.Points.map((location, i) => {
         return (<Pin key={i} lat={location.Latitude} lng={location.Longitude} text={location.Name} />);
       });
   }

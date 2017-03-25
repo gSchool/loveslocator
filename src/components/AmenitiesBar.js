@@ -28,8 +28,8 @@ export default class AmenitiesBar extends Component {
         return this.state.amenities && this.state.amenities.map((type, i) => {
             return (
                 <div key={i} style={{margin: '10px'}}>
-                    <input type="checkbox" id={`s${i}`} class="left" style={{marginRight: '10px'}} />
-                    <label for={`s${i}`}>{type.Name}</label>
+                    <input type="checkbox" id={`s${i}`} className="left" style={{marginRight: '10px'}} />
+                    <label htmlFor={`s${i}`}>{type.Name}</label>
                 </div>
             )
         });
