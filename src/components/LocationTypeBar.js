@@ -51,11 +51,14 @@ export default class LocationTypeBar extends Component {
     }
 
     render() {
+        return <div/>
+        /*
         return (
             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
                 <h4>Select Location Type:</h4>
                 {this.typeCodes}
             </div>
         );
+        */
     }
 }

@@ -69,6 +69,8 @@ export default class LocationBar extends Component {
     }
 
     render() {
+        return <div/>
+        /*
         return (
             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
                 <h4>Select Location:</h4>
@@ -80,5 +82,6 @@ export default class LocationBar extends Component {
                 </select>
             </div>
         );
+        */
     }
 }
