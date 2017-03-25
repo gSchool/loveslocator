@@ -3,6 +3,7 @@
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
+const fetch = require('node-fetch');
 
 const app = express();
 
@@ -15,6 +16,13 @@ app.use(express.static(path.resolve(__dirname, '..', 'build')));
 app.get('/key', (req, res) => {
   res.setHeader('Content-Type', 'application/json');
   res.send(JSON.stringify(process.env.GOOGLE_MAPS_KEY));
+});
+
+app.get('/api/locations', async (req, res, next) => {
+    const stream = await fetch('https://www.loves.com/api/sitecore/Location/GetLovesLocations')
+    const locations = await stream.json();
+    res.setHeader('Content-Type', 'application/json');
+    res.send(JSON.stringify(locations));
 });
 
 // Always return the main index.html, so react-router render the route in the client

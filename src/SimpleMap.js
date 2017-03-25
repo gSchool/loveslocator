@@ -6,27 +6,41 @@ const AnyReactComponent = ({ text }) => <div>{text}</div>;
 
 export default class SimpleMap extends Component {
   static defaultProps = {
-    center: {lat: 59.95, lng: 30.33},
+    center: { lat: 59.95, lng: 30.33 },
     zoom: 11
   };
 
   constructor(props) {
-      super(props);
-      this.state = {
-          key: undefined
-      };
+    super(props);
+    this.state = {
+      key: undefined,
+      locations: undefined
+    };
   }
 
   async componentDidMount() {
-      const stream = await fetch('/key');
-      const key = await stream.json();
+    try {
+      const key = await (await fetch('/key')).json();
+      const locations = await (await fetch('/api/locations')).json();
       this.setState(Object.assign({}, this.state, {
-          key: key
+        key: key,
+        locations: locations
       }));
+    } catch (ex) {
+      console.error(ex);
+    }
+  }
+
+  get locations() {
+    return this.state.locations === undefined
+      ? null
+      : this.state.locations.Points.map((location, i) => {
+        return (<MyGreatPlace key={i} lat={location.Latitude} lng={location.Longitude} text={location.Name} />);
+      });
   }
 
   render() {
-    return this.state.key === undefined ? <div/> : (
+    return this.state.key === undefined ? null : (
       <GoogleMapReact
         apiKey={this.state.key}
         defaultCenter={this.props.center}
@@ -37,7 +51,7 @@ export default class SimpleMap extends Component {
           lng={30.337844}
           text={'Kreyser Avrora'}
         />
-        <MyGreatPlace lat={59.955413} lng={30.337844} text={'A'} /* Kreyser Avrora */ />
+        {this.locations}
       </GoogleMapReact>
     );
   }
