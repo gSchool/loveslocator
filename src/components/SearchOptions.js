@@ -9,6 +9,9 @@ export default class SearchOptions extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            city: undefined,
+            state: undefined,
+            highway: undefined,
             locationTypes: {},
             amenities: {},
             restaurants: {}
@@ -16,7 +19,17 @@ export default class SearchOptions extends Component {
         this.locationTypeChange = this.locationTypeChange.bind(this);
         this.amenitiesChange = this.amenitiesChange.bind(this);
         this.restaurantsChange = this.restaurantsChange.bind(this);
+        this.locationChange = this.locationChange.bind(this);
         this.search = this.search.bind(this);
+    }
+
+    locationChange(state, city, highway) {
+        console.log('location change=', arguments);
+        const s = JSON.parse(JSON.stringify(this.state));
+        s.state = state;
+        s.city = city;
+        s.highway = highway;
+        this.setState(s);
     }
 
     locationTypeChange(locationTypes) {
@@ -49,7 +62,7 @@ export default class SearchOptions extends Component {
     render() {
         return (
             <div>
-                <LocationBar />
+                <LocationBar onChange={this.locationChange} state={this.state.state} state={this.state.city} state={this.state.highway} />
                 <hr />
                 <LocationTypeBar onChange={this.locationTypeChange} locationTypes={this.state.locationTypes} />
                 <hr />

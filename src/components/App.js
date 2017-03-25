@@ -35,14 +35,14 @@ export default class App extends Component {
     const storeTypes = Object.keys(filter.locationTypes).filter((type) => filter.locationTypes[type]);
     const amenities = Object.keys(filter.amenities).filter((type) => filter.amenities[type]);
     const restaurants = Object.keys(filter.restaurants).filter((type) => filter.restaurants[type]);
-
+    console.log('search: ', filter);
     const payload = {
       "StoreTypes": storeTypes,
       "Amenities": amenities,
       "Restaurants": restaurants,
-      //"State": "OK",
-      //"City": "Colbert ",
-      //"Highway": "Hwy 169"
+      "State": filter.state,
+      "City": filter.city,
+      "Highway": filter.highway
     };
 
     try {

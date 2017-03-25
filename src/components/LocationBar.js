@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 
+const DEFAULT_STATE = {Name: 'Select a State', Abbreviation: ''};
+
 export default class LocationBar extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
-            selectedState: undefined,
             states: [],
             cities: []
         };
@@ -21,6 +22,7 @@ export default class LocationBar extends Component {
     async populateStates() {
         try {
             const states = await (await fetch('/api/states')).json();
+            states.unshift(DEFAULT_STATE);
             this.setState(Object.assign({}, this.state, {
                 states: states
             }));
@@ -31,55 +33,49 @@ export default class LocationBar extends Component {
 
     async populateCities(state) {
         try {
-            const cities = await (await fetch(`/api/cities?state=${state.Abbreviation}`)).json();
-            console.log(cities);
-            this.setState(Object.assign({}, this.state, {
-                cities: cities
-            }));
+            if (state.Abbreviation) {
+                const cities = await (await fetch(`/api/cities?state=${state.Abbreviation}`)).json();
+                this.setState(Object.assign({}, this.state, {
+                    cities: cities
+                }));
+            } else {
+                this.setState(Object.assign({}, this.state, {
+                    cities: []
+                }));
+            }
         } catch (ex) {
             console.error(ex);
         }
     }
 
     stateSelect(ev) {
-        const state = this.state.states.filter((state) => state.Name === ev.target.value)[0];
-        this.setState(Object.assign({}, this.state, {
-            selectedState: state
-        }));
+        const state = this.state.states.filter((state) => state.Abbreviation === ev.target.value)[0];
+        this.props.onChange(state.Abbreviation, undefined, undefined);
         this.populateCities(state);
     }
 
     citySelect(ev) {
-        const city = this.state.cities.filter((city) => city.City === ev.target.value)[0];
-        this.setState(Object.assign({}, this.state, {
-            selectedCity: city
-        }));
+        this.props.onChange(this.props.state, ev.target.value, undefined);
     }
 
     get stateCodes() {
-        return this.state.states && this.state.states.map((state, i) => <option key={i}>{state.Name}</option>);
+        return this.state.states && this.state.states.map((state, i) => {
+            return <option key={i} value={state.Abbreviation}>{state.Name}</option>
+        });
     }
 
     get cityCodes() {
         return this.state.cities && this.state.cities.map((city, i) => <option key={i}>{city.City}</option>);
     }
 
-    get selectedStateName() {
-        return this.state.selectedState && this.state.selectedState.Name;
-    }
-
-    get selectedCityName() {
-        return this.state.selectedCity && this.state.selectedCity.City;
-    }
-
     render() {
         return (
             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
                 <h4>Select Location:</h4>
-                <select value={this.selectedStateName} onChange={this.stateSelect}>
+                <select value={this.props.state} onChange={this.stateSelect} >
                     {this.stateCodes}
                 </select>
-                <select value={this.selectedCityName} onChange={this.citySelect}>
+                <select value={this.props.city} onChange={this.citySelect} >
                     {this.cityCodes}
                 </select>
             </div>
