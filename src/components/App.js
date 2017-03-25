@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Map from './Map';
 import SearchOptions from './SearchOptions';
+import ResultList from './ResultList'
 import './App.css';
 
 export default class App extends Component {
@@ -9,7 +10,7 @@ export default class App extends Component {
     super(props);
     this.state = {
       locations: [],
-      filter: {}
+      filter: undefined
     };
     this.search = this.search.bind(this);
   }
@@ -27,7 +28,7 @@ export default class App extends Component {
 
   clear() {
     const state = JSON.parse(JSON.stringify(this.state));
-    state.filter = {};
+    state.filter = undefined;
     this.setState(state);
   }
 
@@ -56,6 +57,7 @@ export default class App extends Component {
       });
       const locations = await stream.json();
       this.setState(Object.assign({}, this.state, {
+        filter: filter,
         locations: locations
       }));
     } catch (ex) {
@@ -63,12 +65,18 @@ export default class App extends Component {
     }
   }
 
+  get body() {
+    return this.state.filter 
+      ? <ResultList locations={this.state.locations.Points} />
+      : <SearchOptions onClear={this.clear} onSearch={this.search} />;
+  }
+
   render() {
     return (
       <div className="App">
         <div style={{ width: '100%', height: '400px' }}>
           <Map locations={this.state.locations} />
-          <SearchOptions onClear={this.clear} onSearch={this.search} />
+          {this.body}
         </div>
       </div>
     );
