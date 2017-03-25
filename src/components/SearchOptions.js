@@ -10,10 +10,12 @@ export default class SearchOptions extends Component {
         super(props);
         this.state = {
             locationTypes: {},
-            amenities: {}
+            amenities: {},
+            restaurants: {}
         };
         this.locationTypeChange = this.locationTypeChange.bind(this);
         this.amenitiesChange = this.amenitiesChange.bind(this);
+        this.restaurantsChange = this.restaurantsChange.bind(this);
         this.search = this.search.bind(this);
     }
 
@@ -26,6 +28,13 @@ export default class SearchOptions extends Component {
     amenitiesChange(amenities) {
         const state = JSON.parse(JSON.stringify(this.state));
         state.amenities = amenities;
+        this.setState(state);
+    }
+
+    restaurantsChange(restaurants) {
+        const state = JSON.parse(JSON.stringify(this.state));
+        state.restaurants = restaurants;
+        console.log('SearchOptions.restaurantsChange state=', state);
         this.setState(state);
     }
 
@@ -46,7 +55,7 @@ export default class SearchOptions extends Component {
                 <hr />
                 <AmenitiesBar onChange={this.amenitiesChange} amenities={this.state.amenities} />
                 <hr />
-                <RestaurantsBar />
+                <RestaurantsBar onChange={this.restaurantsChange} restaurants={this.state.restaurants} />
                 <hr />
                 <button onClick={this.clear}>Clear</button>
                 <button onClick={this.search}>Search</button>

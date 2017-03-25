@@ -34,13 +34,12 @@ export default class App extends Component {
   async search(filter) {
     const storeTypes = Object.keys(filter.locationTypes).filter((type) => filter.locationTypes[type]);
     const amenities = Object.keys(filter.amenities).filter((type) => filter.amenities[type]);
+    const restaurants = Object.keys(filter.restaurants).filter((type) => filter.restaurants[type]);
 
     const payload = {
       "StoreTypes": storeTypes,
       "Amenities": amenities,
-      "Restaurants": [
-        //"Arby's"
-      ],
+      "Restaurants": restaurants,
       //"State": "OK",
       //"City": "Colbert ",
       //"Highway": "Hwy 169"

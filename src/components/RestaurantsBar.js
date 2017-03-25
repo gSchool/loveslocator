@@ -7,6 +7,7 @@ export default class RestaurantsBar extends Component {
         this.state = {
             restaurants: []
         };
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -27,12 +28,27 @@ export default class RestaurantsBar extends Component {
     get restaurantCodes() {
         return this.state.restaurants && this.state.restaurants.map((restaurant, i) => {
             return (
-                <div key={i} style={{margin: '10px'}}>
-                    <input type="checkbox" id={`s${i}`} className="left" style={{marginRight: '10px'}} />
+                <div key={i}>
+                    <input 
+                        type="checkbox" 
+                        id={`s${i}`} 
+                        name={restaurant.Name}
+                        className="left" 
+                        style={{marginRight: '10px'}} 
+                        defaultChecked={this.props.restaurants[restaurant.Name]}
+                        onChange={this.handleChange}
+                        />
                     <label htmlFor={`s${i}`}>{restaurant.Name}</label>
                 </div>
             )
         });
+    }
+
+    handleChange(ev) {
+        const restaurants = Object.assign({}, this.props.restaurants);
+        restaurants[ev.target.name] = ev.target.checked;
+        console.log('restaurants=', restaurants);
+        this.props.onChange(restaurants);
     }
 
     render() {
