@@ -33,13 +33,11 @@ export default class App extends Component {
 
   async search(filter) {
     const storeTypes = Object.keys(filter.locationTypes).filter((type) => filter.locationTypes[type]);
+    const amenities = Object.keys(filter.amenities).filter((type) => filter.amenities[type]);
 
     const payload = {
       "StoreTypes": storeTypes,
-      "Amenities": [
-        //"Commercial Truck Oil Cha",
-        //"ATM"
-      ],
+      "Amenities": amenities,
       "Restaurants": [
         //"Arby's"
       ],

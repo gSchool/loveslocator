@@ -9,15 +9,23 @@ export default class SearchOptions extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            locationTypes: {}
+            locationTypes: {},
+            amenities: {}
         };
         this.locationTypeChange = this.locationTypeChange.bind(this);
+        this.amenitiesChange = this.amenitiesChange.bind(this);
         this.search = this.search.bind(this);
     }
 
     locationTypeChange(locationTypes) {
         const state = JSON.parse(JSON.stringify(this.state));
         state.locationTypes = locationTypes;
+        this.setState(state);
+    }
+
+    amenitiesChange(amenities) {
+        const state = JSON.parse(JSON.stringify(this.state));
+        state.amenities = amenities;
         this.setState(state);
     }
 
@@ -36,7 +44,7 @@ export default class SearchOptions extends Component {
                 <hr />
                 <LocationTypeBar onChange={this.locationTypeChange} locationTypes={this.state.locationTypes} />
                 <hr />
-                <AmenitiesBar />
+                <AmenitiesBar onChange={this.amenitiesChange} amenities={this.state.amenities} />
                 <hr />
                 <RestaurantsBar />
                 <hr />

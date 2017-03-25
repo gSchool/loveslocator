@@ -7,6 +7,7 @@ export default class AmenitiesBar extends Component {
         this.state = {
             amenities: []
         };
+        this.handleChange = this.handleChange.bind(this);
     }
 
     componentDidMount() {
@@ -27,12 +28,26 @@ export default class AmenitiesBar extends Component {
     get amenityCodes() {
         return this.state.amenities && this.state.amenities.map((type, i) => {
             return (
-                <div key={i} style={{margin: '10px'}}>
-                    <input type="checkbox" id={`s${i}`} className="left" style={{marginRight: '10px'}} />
+                <div key={i}>
+                    <input 
+                        type="checkbox" 
+                        id={`s${i}`} 
+                        name={type.Name}
+                        className="left" 
+                        style={{marginRight: '10px'}} 
+                        defaultChecked={this.props.amenities[type.Name]}
+                        onChange={this.handleChange}
+                        />
                     <label htmlFor={`s${i}`}>{type.Name}</label>
                 </div>
             )
         });
+    }
+
+    handleChange(ev) {
+        const amenities = Object.assign({}, this.props.amenities);
+        amenities[ev.target.name] = ev.target.checked;
+        this.props.onChange(amenities);
     }
 
     render() {
