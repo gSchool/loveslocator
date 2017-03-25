@@ -5,7 +5,6 @@ const morgan = require('morgan');
 const path = require('path');
 const fetch = require('node-fetch');
 const bodyParser = require('body-parser');
-const locations = require('./data/locations');
 
 const app = express();
 
@@ -30,6 +29,8 @@ const BASE_URL = 'https://www.loves.com/api/sitecore/Location';
 
 app.get('/api/locations', async (req, res, next) => {
   try {
+    const stream = await fetch(`${BASE_URL}/GetLovesLocations`)
+    const locations = await stream.json();
     res.setHeader('Content-Type', 'application/json');
     res.send(JSON.stringify(locations));
   } catch (ex) {
