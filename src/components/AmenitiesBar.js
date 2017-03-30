@@ -51,7 +51,7 @@ export default class AmenitiesBar extends Component {
     }
 
     render() {
-        // TODO: Remove <div/> and uncomment the code below!
+        // TODO: Remove <div/> and uncomment the code below! test
         return <div/>
         /*
         return (
