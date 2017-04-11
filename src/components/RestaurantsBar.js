@@ -52,9 +52,6 @@ export default class RestaurantsBar extends Component {
     }
 
     render() {
-        // TODO: Remove <div/> and uncomment the code below!
-        return <div/>
-        /*
         return (
             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
                 <h4>Select Restaurants:</h4>
@@ -63,6 +60,5 @@ export default class RestaurantsBar extends Component {
                 </div>
             </div>
         );
-        */
     }
 }
