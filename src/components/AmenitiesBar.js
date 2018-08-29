@@ -51,8 +51,6 @@ export default class AmenitiesBar extends Component {
     }
 
     render() {
-        return <div/>
-        /*
         return (
             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
                 <h4>Select Amenities:</h4>
@@ -61,6 +59,5 @@ export default class AmenitiesBar extends Component {
                 </div>
             </div>
         );
-        */
     }
 }

@@ -52,8 +52,6 @@ export default class RestaurantsBar extends Component {
     }
 
     render() {
-        return <div/>
-        /*
         return (
             <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>
                 <h4>Select Restaurants:</h4>
@@ -62,6 +60,5 @@ export default class RestaurantsBar extends Component {
                 </div>
             </div>
         );
-        */
     }
 }
